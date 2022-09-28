@@ -17,8 +17,5 @@ public class Game {
             System.out.println(d1);
         }
 
-        //TEST
-
-
     }
 }
