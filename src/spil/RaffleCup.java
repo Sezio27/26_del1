@@ -6,13 +6,11 @@ public class RaffleCup {
 
     }
     public void roll(Dice d1, Dice d2){
-        d1.roll();
-        d2.roll();
+        d1.setFaceValue((int)(Math.random()*6+1));
+        d2.setFaceValue((int)(Math.random()*6+1));
     }
     public boolean getEns(Dice d1, Dice d2){
-        if (d1.getFaceValue() == d2.getFaceValue())
-            System.out.println("Terningerne har samme værdi af:" + d1);
-        return true;
+        return d1.getFaceValue() == d2.getFaceValue();
     }
     public int getSum(Dice d1, Dice d2){
         return d1.getFaceValue()+d2.getFaceValue();
