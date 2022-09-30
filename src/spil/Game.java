@@ -48,8 +48,8 @@ public class Game {
         System.out.println("Dice 2: " + d2.getFaceValue());
         System.out.println();
 
-        int earnedPoints = r1.getSum(d1, d2);
-        player.setPoints(player.getPoints() + earnedPoints);
+        int earnedPoints=  r1.getSum(d1, d2);
+        player.setPoints(player.getPoints()+earnedPoints);
 
         if (r1.getEns(d1, d2)) {
             earnedPoints = r1.getSum(d1, d2);
