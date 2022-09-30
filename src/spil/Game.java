@@ -57,7 +57,9 @@ public class Game {
             if(d1.getFaceValue() == 1) {
                 System.out.println("Darn! you hit two ones, return to start :(");
                 player.setPoints(0);
-            }
+            } else
+                System.out.println("Congratulations you rolled two identical and got " + earnedPoints + " points!");
+            System.out.println();
         }
 
     }
