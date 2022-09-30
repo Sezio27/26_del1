@@ -19,7 +19,7 @@ public class Game {
         Dice d1 = new Dice();
         Dice d2 = new Dice();
         Player p1 = new Player(1, 0);
-        Player p2 = new Player(2, 38);
+        Player p2 = new Player(2, 0);
 
         //GUI
         //Design choice for differentiating between cars
