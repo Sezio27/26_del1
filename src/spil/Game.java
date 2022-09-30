@@ -54,8 +54,10 @@ public class Game {
         if (r1.getEns(d1, d2)) {
             earnedPoints = r1.getSum(d1, d2);
             player.setPoints(player.getPoints() + earnedPoints);
-            System.out.println("Congratulations you rolled two identical and got " + earnedPoints + " points!");
-            System.out.println();
+            if(d1.getFaceValue() == 1) {
+                System.out.println("Darn! you hit two ones, return to start :(");
+                player.setPoints(0);
+            }
         }
 
     }
