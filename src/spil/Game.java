@@ -63,7 +63,7 @@ public class Game {
     }
 
     public static void roll(RaffleCup r1, Dice d1, Dice d2, Player player, Scanner scan) {
-        System.out.print("Player " + player.getPlayerNumber() + "'s turn to shake and roll the dice!");
+        System.out.println("Player " + player.getPlayerNumber() + "'s turn to shake and roll the dice!");
         scan.nextLine();
 
         r1.roll(d1, d2);
