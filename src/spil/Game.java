@@ -1,11 +1,18 @@
 package spil;
 
+import java.awt.*;
 import java.util.Scanner;
+
+import gui_fields.GUI_Car;
+import gui_fields.GUI_Player;
+import gui_main.GUI;
 
 public class Game {
     public static void main(String[] args) {
         run();
     }
+
+    static GUI gui = new GUI();
 
     public static void run() {
         RaffleCup r1 = new RaffleCup();
@@ -14,24 +21,42 @@ public class Game {
         Player p1 = new Player(1, 0);
         Player p2 = new Player(2, 0);
 
+        //GUI
+        //Design choice for differentiating between cars
+        GUI_Car[] cars = new GUI_Car[2];
+        cars[0] = new GUI_Car(Color.WHITE, Color.BLACK, GUI_Car.Type.UFO, GUI_Car.Pattern.CHECKERED);
+        cars[1] = new GUI_Car(Color.CYAN, Color.PINK, GUI_Car.Type.TRACTOR, GUI_Car.Pattern.DOTTED);
+
+        GUI_Player[] gui_players = new GUI_Player[2];
+        for (int i = 0; i < 2; i++) {
+            //Creating the players
+            gui_players[i] = new GUI_Player("P" + (i + 1), 0, cars[i]);
+            //Adding players to the board
+            gui.addPlayer(gui_players[i]);
+        }
+
+
         Scanner scan = new Scanner(System.in);
         System.out.println("Starting game...");
         System.out.println("Press enter to shake the raffle cup and roll the dice.");
 
+        printCurrentPoints(p1, p2);
         while (true) {
 
-            printCurrentPoints(p1, p2);
+                roll(r1, d1, d2, p1, scan, false);
+                //Adding points to the GUI (p1)
+                gui_players[0].setBalance(p1.getPoints());
+                if (hasWon(p1)) {
+                    printCurrentPoints(p1, p2);
+                    break;
+                }
 
-            roll(r1, d1, d2, p1, scan,false);
 
-            if (hasWon(p1)) {
-                printCurrentPoints(p1, p2);
-                break;
-            }
+            roll(r1, d1, d2, p2, scan, false);
 
-            roll(r1, d1, d2, p2, scan,false);
-
+            gui_players[1].setBalance(p2.getPoints());
             if (hasWon(p2)) {
+                //Adding points to the GUI (p2)
                 printCurrentPoints(p1, p2);
                 break;
             }
@@ -48,6 +73,8 @@ public class Game {
         System.out.println("Dice 1: " + d1.getFaceValue());
         System.out.println("Dice 2: " + d2.getFaceValue());
         System.out.println();
+        //GUI showcase of the dice throw
+        gui.setDice(d1.getFaceValue(), d2.getFaceValue());
 
         int earnedPoints=  r1.getSum(d1, d2);
         player.setPoints(player.getPoints()+earnedPoints);
@@ -73,6 +100,7 @@ public class Game {
                 } else
                     roll(r1, d1, d2, player, scan, false);
             }
+
             System.out.println();
         }
 
