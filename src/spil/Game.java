@@ -22,14 +22,14 @@ public class Game {
 
             printCurrentPoints(p1, p2);
 
-            roll(r1, d1, d2, p1, scan);
+            roll(r1, d1, d2, p1, scan,false);
 
             if (hasWon(p1)) {
                 printCurrentPoints(p1, p2);
                 break;
             }
 
-            roll(r1, d1, d2, p2, scan);
+            roll(r1, d1, d2, p2, scan,false);
 
             if (hasWon(p2)) {
                 printCurrentPoints(p1, p2);
@@ -39,7 +39,8 @@ public class Game {
         scan.close();
     }
 
-    public static void roll(RaffleCup r1, Dice d1, Dice d2, Player player, Scanner scan) {
+    public static void roll(RaffleCup r1, Dice d1, Dice d2, Player player, Scanner scan, boolean rollForVictory) {
+
         System.out.println("Player " + player.getPlayerNumber() + "'s turn to shake and roll the dice!");
         scan.nextLine();
 
@@ -55,12 +56,22 @@ public class Game {
             earnedPoints = r1.getSum(d1, d2);
             player.setPoints(player.getPoints() + earnedPoints);
             if(d1.getFaceValue() == 1) {
-                System.out.println("Darn! you hit two ones, return to start :(");
+                System.out.println("Darn! you hit two ones, return to zero :(");
                 player.setPoints(0);
             } else {
-                System.out.println("Congratulations you rolled two identical and got " + earnedPoints + " points!");
-                System.out.println("You may roll again! 😎👍");
-                roll(r1, d1, d2, player, scan);
+                if(d1.getFaceValue() == 6) {
+                    if (rollForVictory) {
+                        System.out.println("AYOOOO YOU HIT 2X6 TWICE!!!!");
+                        player.setPoints(9001);
+                        hasWon(player);
+                        System.exit(1);
+                    } else {
+                        System.out.println("Congratulations you rolled two identical and got " + earnedPoints + " points!");
+                        System.out.println("You may roll again! 😎👍");
+                        roll(r1, d1, d2, player, scan, true);
+                    }
+                } else
+                    roll(r1, d1, d2, player, scan, false);
             }
             System.out.println();
         }
